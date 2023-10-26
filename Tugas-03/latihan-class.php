@@ -7,7 +7,7 @@ function newline()
 
 class Animals
 {
-  private array $data = [];
+  private array $animals = [];
   public function __construct()
   {
 
@@ -15,13 +15,13 @@ class Animals
 
   public function index()
   {
-    print_r($this->data);
+    print_r($this->animals);
     newline();
   }
 
   public function store(string $newAnimal)
   {
-    array_push($this->data, $newAnimal);
+    array_push($this->animals, $newAnimal);
     echo "add " . $newAnimal . "";
     newline();
   }
@@ -30,19 +30,19 @@ class Animals
   {
     echo "update " . $oldAnimal . " to " . $newAnimal . "";
     newline();
-    $old_animal_index = array_search($oldAnimal, $this->data);
+    $old_animal_index = array_search($oldAnimal, $this->animals);
     if ($old_animal_index == false) {
       echo 'animal "' . $oldAnimal . '" not found';
       newline();
     }
-    $this->data[$old_animal_index] = $newAnimal;
+    $this->animals[$old_animal_index] = $newAnimal;
   }
   public function destroy($animal)
   {
     echo "delete " . $animal . "";
     newline();
-    $animal_index = array_search($animal, $this->data);
-    unset($this->data[$animal_index]);
+    $animal_index = array_search($animal, $this->animals);
+    unset($this->animals[$animal_index]);
   }
 }
 
@@ -51,7 +51,7 @@ $animals->store("cat");
 $animals->store("dog");
 $animals->store("chicken");
 $animals->index();
-$animals->update("do", "dinosaur");
+$animals->update("dog", "dinosaur");
 $animals->index();
 $animals->destroy("dinosaur");
 $animals->index();
