@@ -43,6 +43,7 @@ class StudentController extends Controller
             'jurusan' => $request->input('jurusan'),
         ]);
 
+
         $student->save();
     }
 
