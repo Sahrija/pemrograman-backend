@@ -1,4 +1,4 @@
-const {index, store, update, destroy} = require("./task/controller/fruitController.js");
+const { index, store, update, destroy } = require("./task/controller/fruitController.js");
 
 index();
 store('nanas')
