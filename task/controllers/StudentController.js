@@ -23,35 +23,60 @@ class StudentController {
      */
     // code here
 
-    const data = {
-      message: "Menambahkan data student",
-      data: [],
-    };
+    await Student.create(req.body)
+      .then((result) => {
+        const data = {
+          message: "Menambahkan data student",
+          data: [
+            result
+          ],
+        };
+        res.json(data);
 
-    res.json(data);
+      })
+      .catch(
+        (err) => {
+          const data = {
+            message: "Menambahkan data student gagal",
+            error_message: err.message
+          }
+          res.json(data);
+        }
+      )
+
+
   }
 
-  update(req, res) {
+  async update(req, res) {
     const { id } = req.params;
-    const { nama } = req.body;
 
-    const data = {
-      message: `Mengedit student id ${id}, nama ${nama}`,
-      data: [],
-    };
+    await Student.update(id, req.body)
+      .then((result) => {
+        const data = {
+          message: `Mengedit student id ${id}`,
+          data: result,
+        };
 
-    res.json(data);
+        res.json(data);
+      }).catch((error) => {
+
+      });
+
+
   }
 
-  destroy(req, res) {
+  async destroy(req, res) {
     const { id } = req.params;
 
-    const data = {
-      message: `Menghapus student id ${id}`,
-      data: [],
-    };
+    await Student.destroy(id)
+      .then((result) => {
+        const data = {
+          message: `Menghapus student id ${id}`,
+          data: [result],
+        };
 
-    res.json(data);
+        res.json(data);
+      });
   }
 }
 
