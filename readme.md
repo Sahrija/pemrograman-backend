@@ -5,6 +5,7 @@ npx nodemon app.js
 ```
 or
 ```
+cd ./task
 npm run start
 ```
 
