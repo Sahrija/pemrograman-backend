@@ -1,6 +1,6 @@
 ## Run
 ```
-cd ./test
+cd ./task
 npx nodemon app.js
 ```
 or
