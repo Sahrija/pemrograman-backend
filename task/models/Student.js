@@ -31,10 +31,15 @@ class Student {
       let { nama, nim, email, jurusan } = student;
       const query = `INSERT INTO students VALUES('','${nama}','${nim}','${email}','${jurusan}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)`;
       db.query(query, (err, results) => {
-        if (err) reject(err);
-        resolve(results);
+
+        if (err) return reject(err);
+
+        const id = results.insertId;
+        const new_student = this.find(id);
+        resolve(new_student);
       });
     });
+
   }
 
   static update(id, student) {
@@ -92,13 +97,12 @@ class Student {
     return new Promise((resolve, reject) => {
       const query = `SELECT * FROM students WHERE id = '${id}'`;
 
-
       db.query(query, (err, results) => {
         if (err) reject(err);
         const [student] = results;
         if (!student) reject({ message: `student id ${id} tidak ditemukan` });
         resolve(student);
-        console.log("this line will be executed even the promise is rejected")
+        console.log("this line will be executed even the promise is rejected without return")
       });
     })
   }

@@ -1,5 +1,6 @@
 // import Model Student
 const Student = require("../models/Student");
+const validation = require("../validation/validation");
 
 class StudentController {
   // menambahkan keyword async
@@ -30,6 +31,18 @@ class StudentController {
      */
     // code here
 
+    const {nama, nim, email, jurusan } = req.body;
+
+    if(!nama || !nim || !email || !jurusan){
+      const data = { message: "All data is required"}
+      res.status(500).json(data);
+    }
+    
+    // validate email
+    if(!validation.validateEmail(email)){
+      res.status(500).json({message: "Email is not valid"});
+    }
+
     await Student.create(req.body)
       .then((result) => {
         const data = {
@@ -39,7 +52,6 @@ class StudentController {
           ],
         };
         res.json(data);
-
       })
       .catch((err) => {
         const data = {
