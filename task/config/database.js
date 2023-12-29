@@ -19,14 +19,16 @@ const db = mysql.createConnection({
  * Connect ke database menggunakan method connect.
  * Menerima parameter callback
  */
-db.connect((err) => {
-  if (err) {
-    console.log("Error connecting " + err.stack);
-    return;
-  } else {
-    console.log("Connected to database");
-    return;
-  }
-});
+  db.connect((err) => {
+    if (err) {
+      console.log("Error connecting " + err.stack);
+      console.log("!! Your database connection cannot be established");
+      console.log("!! It looks like you forgot to turn on your mysql server");
+      return;
+    } else {
+      console.log("Connected to database");
+      return;
+    }
+  });
 
 module.exports = db;

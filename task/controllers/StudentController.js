@@ -5,14 +5,21 @@ class StudentController {
   // menambahkan keyword async
   async index(req, res) {
     // memanggil method static all dengan async await.
-    const students = await Student.all();
-
-    const data = {
-      message: "Menampilkkan semua students",
-      data: students,
-    };
-
-    res.json(data);
+    await Student.all()
+      .then((students) => {
+        const data = {
+          message: "Menampilkkan semua student",
+          data: students,
+        };
+        res.json(data);
+        console.log(students);
+      })
+      .catch((err) => {
+        res.status(500).json({
+          message: "Tidak dapat menampilkan semua student",
+          err_message: err
+        });
+      });
   }
 
   async store(req, res) {
@@ -34,17 +41,13 @@ class StudentController {
         res.json(data);
 
       })
-      .catch(
-        (err) => {
-          const data = {
-            message: "Menambahkan data student gagal",
-            error_message: err.message
-          }
-          res.json(data);
+      .catch((err) => {
+        const data = {
+          message: "Menambahkan data student gagal",
+          error_message: err.message
         }
-      )
-
-
+        res.status(500).json(data);
+      });
   }
 
   async update(req, res) {
@@ -56,13 +59,11 @@ class StudentController {
           message: `Mengedit student id ${id}`,
           data: result,
         };
-
         res.json(data);
-      }).catch((error) => {
-
+      })
+      .catch((error) => {
+        res.status(500).json({ error: error.message });
       });
-
-
   }
 
   async destroy(req, res) {
@@ -74,8 +75,27 @@ class StudentController {
           message: `Menghapus student id ${id}`,
           data: [result],
         };
+        res.json(data);
+      })
+      .catch((error) => {
+        res.status(500).json({ message: `Tidak dapat menghapus student id ${id}`, error: error.message });
+      });
+  }
+
+  show(req, res) {
+    const { id } = req.params;
+
+    Student.find(id)
+      .then((result) => {
+        const data = {
+          message: `Mendapatkan student id ${id}`,
+          data: [result],
+        };
 
         res.json(data);
+      })
+      .catch((err) => {
+        res.status(400).json(err);
       });
   }
 }
